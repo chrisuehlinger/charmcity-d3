@@ -77,10 +77,10 @@
 						<li>How to Learn D3</li>
 						<li>Bar Chart Tutorial:
 							<ul>
-								<li>SVG</li>
 								<li>Selectors</li>
 								<li>Data Joins</li>
 								<li>Scales</li>
+                <li>Transitions</li>
 							</ul>
 						</li>
 					</ul>
@@ -91,252 +91,21 @@
                 </section>
 
 				<section>
-                  <h2>An SVG Primer</h2>
-                  <ul>
-                      <li>SVG stands for Scalable Vector Graphics</li>
-                      <li>A text-based image format</li>
-                      <li>Can be output by image editors (Adobe Illustrator, Inkskape, Sketch)</li>
-                      <li>Can be edited by text editors (Notepad, Sublime Text, Visual Studio)</li>
-                  </ul>
-                </section>
-                
-                <section>
-                  <h2>An SVG Example</h2>
-                  <p>SVG is basically HTML with shapes:</p>
-                  <div class="codepen-embed">
-                      <p data-height="260" data-theme-id="0" data-slug-hash="waqZRK" data-default-tab="html" data-user="uehreka" class='codepen'>See the Pen <a href='http://codepen.io/uehreka/pen/waqZRK/'>waqZRK</a> by Chris Uehlinger (<a href='http://codepen.io/uehreka'>@uehreka</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
-<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
-                  </div>
-                </section>
-                
-                <section>
-                  <h2>D3 Selectors</h2>
-                  <div>
-                    <p>Similar to jQuery Selectors:</p>
-                    <pre><code data-trim class="javascript">
-var jQuerySelection = $(".foo #bar div:first-child");
-
-// is equivalent to:
-var d3Selection = d3.selectAll(".foo #bar div:first-child");
-                    </code></pre>
-                  </div>
-                  <div>
-                    <p>Many similar abilities:</p>
-                    <pre><code data-trim class="javascript">
-$(".foo").append("ul");
-d3.selectAll(".foo").append("ul");
-                    </code></pre>
-                  </div>
-                  <div>
-                    <p>SVG is free out-of-the-box!</p>
-                    <pre><code data-trim class="javascript">
-$("svg.myPicture").append("circle");
-d3.selectAll("svg.myPicture").append("circle");
-                    </code></pre>
-                  </div>
-                </section>
-                
-                <section>
-                  <h2>Method Chaining</h2>
-                  <div>
-                    <p>Get used to seeing things like this:</p>
-                    <pre><code data-trim class="javascript">
-d3.selectAll("svg.my-picture")
-  .append("g")
-    .attr("class", "circle-group")
-  .append("circle")
-    .attr("cx", 100)
-    .attr("y", 200)
-    .attr("r", 50);
-                    </code></pre>
-                  </div>
-                  <div>
-                    <p>To create things like this:</p>
-                    <pre><code data-trim class="html">
-&lt;svg class="my-picture"&gt;
-  &lt;g class="circle-group"&gt;
-    &lt;circle cx="100" cy="200" r="50"&gt;&lt;/circle&gt;
-  &lt;/g&gt;
-&lt;/svg&gt;
-                    </code></pre>
-                  </div>
-                </section>
-              
-                <section>
-                  <h2>Got it?</h2>
-                  <div>
-                    <p>Roll your own chained method:</p>
-                    <pre><code data-trim class="javascript">
-function foo(){
-  return {
-    bar:function(n){ 
-      return n+1;
-    }
-  };
-};
-                    </code></pre>
-                  </div>
-                  <div>
-                    <p>And then use it like this:</p>
-                    <pre><code data-trim class="javascript">
-var baz = foo().bar(3);
-
-// -> 4
-console.log(baz);
-                    </code></pre>
-                  </div>
-                </section>
-                
-                <section>
-                    <h2>Keeping track of chained methods</h2>
-                    <div class="container">
-                      <div class="col">
-                        <p>Capture chains in variables:</p>
-                        <pre><code data-trim class="javascript">
-var group = d3.selectAll("svg.foo")
-              .append("g")
-                .attr("class", "bar");
-                        </code></pre>
-                      </div>
-                      <div class="col">
-                        <p>To build nested stuff:</p>
-                        <pre><code data-trim class="html">
-<svg class="foo">
-  <g class="bar"></g>
-</svg>
-                        </code></pre>
-                      </div>
-                    </div>
-                    <div class="container fragment">
-                      <div class="col">
-                        <pre><code data-trim class="javascript">
-group.append("circle")
-    .attr("cx", 100)
-    .attr("y", 200)
-    .attr("r", 50);
-                        </code></pre>
-                      </div>
-                      <div class="col">
-                        <pre><code data-trim class="html">
-<svg class="foo">
-  <g class="bar">
-    <circle cx="100" cy="200" r="50">
-    </circle>
-  </g>
-</svg>
-                        </code></pre>
-                      </div>
-                    </div>
-                    <div class="container fragment">
-                      <div class="col">
-                        <pre><code data-trim class="javascript">
-group.append("text")
-    .text("Hello World");
-                        </code></pre>
-                      </div>
-                      <div class="col">
-                        <pre><code data-trim class="html">
-<svg class="foo">
-  <g class="bar">
-    <circle cx="100" cy="200" r="50">
-    </circle>
-    <text>Hello World</text>
-  </g>
-</svg>
-                        </code></pre>
-                      </div>
-                    </div>
-                </section>
-                
-                <section>
-                    <h2>Data Joins</h2>
-                    <ul>
-                      <li>Quite possibly the most confusing part of D3</li>
-                      <li>Mike Bostock's <a href="http://bost.ocks.org/mike/join/">Thinking With Joins</a> article
-                        <svg width="720" height="300" style="font-size:18px; background: #fff; margin-top: 20px;">
-                          <g transform="translate(0,158)">
-                            <g transform="translate(300)">
-                              <circle r="110" style="fill: rgb(49, 130, 189); fill-opacity: .2; stroke: black; stroke-width: 1.5px;"></circle>
-                              <text y="-120" dy=".35em" text-anchor="middle" style="font-weight: bold;">Data</text>
-                              <text x="-50" dy=".35em" text-anchor="middle">Enter</text>
-                            </g>
-                            <text x="360" dy=".35em" text-anchor="middle">Update</text>
-                            <g transform="translate(420)">
-                              <circle r="110" style="fill: rgb(230, 85, 13); fill-opacity: .2; stroke: black; stroke-width: 1.5px;"></circle>
-                              <text y="-120" dy=".35em" text-anchor="middle" style="font-weight: bold;">Elements</text>
-                              <text x="50" dy=".35em" text-anchor="middle">Exit</text>
-                            </g>
-                          </g>
-                        </svg>
-                      </li>
-                    </ul>
-                    
-                </section>
-                
-                <section>
-                    <h2>Data Selectors</h2>
-                    <div>
-                      <!--<p>Here's some data:</p>-->
-                      <pre><code data-trim class="javascript">
-var data = [
-  {
-    xPos:120,
-    yPos:200
-  },
-  {
-    xPos:220,
-    yPos:100
-  },
-  {
-    xPos:150,
-    yPos:80
-  }
-];
-                      </code></pre>
-                    </div>
-                    <div>
-                      <!--<p>And here's our markup:</p>-->
-                      <pre><code data-trim class="html">
-<svg></svg>
-                      </code></pre>
-                    </div>
-                </section>
-                
-                <section>
-                    <h2>Not confusing at all</h2>
-                    <div>
-                      <p>Let's make a circle for each data point:</p>
-                      <pre><code data-trim class="javascript">
-svg.selectAll("circle")
-    .data(data)
-  .enter().append("circle")
-    .attr("cx", function(d) { return d.xPos; })
-    .attr("cy", function(d) { return d.yPos; })
-    .attr("r", 25);
-                      </code></pre>
-                    </div>
-                    <p>Whoa there...</p>
-                </section>
-                
-                <section>
-                    <h2>The Enter Selector</h2>
-                    <div class="stretch">
+					<h2>Let's make a bar chart</h2>
+					<a href="http://codepen.io/uehreka/pen/MJVmWV?editors=1010" target="_blank">1</a>
+					<a href="http://codepen.io/uehreka/pen/apYWZM?editors=1010" target="_blank">2</a>
+					<a href="http://codepen.io/uehreka/pen/YNaqoZ?editors=1010" target="_blank">3</a>
+					<div class="stretch">
                       <div style="display:inline-block; width:25%">
                         <p>Data</p>
                         <pre><code data-trim contenteditable class="javascript">
 var data = [
-  {
-    xPos:120,
-    yPos:200
-  },
-  {
-    xPos:220,
-    yPos:100
-  },
-  {
-    xPos:150,
-    yPos:80
-  }
+	4, 
+	8, 
+	15, 
+	16, 
+	23, 
+	42
 ];
                         </code></pre>
 
@@ -344,203 +113,43 @@ var data = [
                       <div style="display:inline-block; width:74%; vertical-align:top;">
                         <p>D3 Code</p>
                         <pre><code data-trim contenteditable class="javascript">
-svg.selectAll("circle")
+d3.select(".chart")
+  .selectAll("div")
     .data(data)
-  .enter().append("circle")
-    .attr("cx", function(d) { return d.xPos; })
-    .attr("cy", function(d) { return d.yPos; })
-    .attr("r", 25);
+  .enter().append("div")
+    .text(function(d) { return d; });
                         </code></pre>
                         <p>Markup</p>
                         <pre><code data-trim contenteditable class="html">
-<svg>
-
-</svg>
+<div class="chart">
+</div>
                         </code></pre>
                       </div>
                     </div>
-                </section>
-                  
-                  <section>
-                    <section>
-                    <h2>Enter, Update and Exit</h2>
-                      <div class="stretch">
-                        <div style="display:inline-block; width:40%">
-                          <pre><code data-trim contenteditable class="javascript">
-var data = [
-  {
-    xPos:120,
-    yPos:200
-  },
-  {
-    xPos:220,
-    yPos:100
-  },
-  {
-    xPos:150,
-    yPos:80
-  }
-];
-                        </code></pre>
+					
+				</section>
 
-                        </div>
-                        <div style="display:inline-block; width:59%; vertical-align:top;">
-                          <pre><code data-trim contenteditable class="javascript">
-var circle = svg.selectAll("circle")
-    .data(data);
-// Enter
-circle.enter()
-  .append("circle")
-    .attr("cx", function(d) { return d.xPos; })
-    .attr("cy", function(d) { return d.yPos; })
-    .attr("r", 25);
-// Update
-circle
-    .attr("cx", function(d) { return d.xPos; })
-    .attr("cy", function(d) { return d.yPos; })
-    .attr("r", 25);
-// Exit
-circle.exit()
-    .remove();
-                        </code></pre>
-                      </div>
-                      <div>
-                        <pre><code data-trim contenteditable class="html">
-<svg>
-    <circle cx="120" cy="200" r="25"></circle>
-    <circle cx="220" cy="100" r="25"></circle>
-    <circle cx="150" cy="80" r="25"></circle>
-</svg>
-                        </code></pre>
-                      </div>
-                    </div>
-                  </section>
-                    
-                  <section>
-                    <h2>Data Joins Demos</h2>
+
+				<section>
+					<h2>D3 Resources</h2>
                     <ul>
-                      <li><a href="http://codepen.io/uehreka/pen/rVzgmr">Enter, Update and Exit</a></li>
-                      <li><a href="http://codepen.io/uehreka/pen/WvEByX">Data Joins with Animations</a></li>
-                    </ul>
-                  </section>
-                </section>
-                
-                <section>
-                  <h2>Scales</h2>
-                  <div class="fragment">
-                    <p>Scales are functions that map from an input domain to an output range. That's it.</p>
-                    <pre><code data-trim contenteditable class="javascript">
-var myScale = d3.scale.linear()
-                .domain([0, 100]) // Takes in a number from 1 to 100
-                .range([0, 1]);   // Outputs a number between 0 and 1
-                
-myScale(50)  // -> 0.5
-myScale(22)  // -> 0.22
-myScale(101) // -> 1.01
-                        </code></pre>
-                  </div>
-                </section>
-                
-                <section>
-                    <h2>Color Scales</h2>
-                    <p>D3 handles colors really well out of the box.</p>
-                    <pre><code data-trim contenteditable class="javascript">
-var color = d3.scale.linear()
-              .domain([0, 100])         // Takes in a number from 1 to 100
-              .range(["#000", "#fff"]); // Outputs a color from black to white
-                
-color(0)    // -> "#000" (black)
-color(100)  // -> "#fff" (white)
-color(50)   // -> "#808080" (medium gray)
-                        </code></pre>
-                  
-                  <p><a href="http://codepen.io/uehreka/pen/ZGXOQP?editors=001" target="_blank">Here's a CodePen</a> that demonstrates color scales.</p>
-                </section>
-                
-                <section>
-                  <h2>Types of Scales</h2>
-                  <ul>
-                    <li class="fragment">Qualitative Scales for fluid ranges</li>
-                    <li class="fragment">Ordinal Scales for discrete numbers</li>
-                    <li class="fragment">Time Scales for dealing with the complex nature of time</li>
-                  </ul>
-                </section>
-                
-                <section>
-                  <h2>Let's Make a Bar Chart</h2>
-                  <p>We now have all the tools we need to make a basic bar chart!</p>
-                </section>
-                
-                <section>
-                  <h2>Layouts</h2>
-                  <ul>
-                    <li class="fragment">Layouts are D3's way of calculating positions of certain elements</li>
-                    <li class="fragment">They are medium-agnostic: They take in data and output positions and sizes.</li>
-                  </ul>
-                </section>
-                
-                <section>
-                  <h2>Pie Layout</h2>
-                  <div class="container">
-                    <div class="col small">
-                      <p>Before</p>
-                      <pre><code data-trim contenteditable class="javascript">
-var data = [
-  {
-    id:1,
-    amount:10
-  },
-  {
-    id:2,
-    amount:20
-  },
-  {
-    id:3,
-    amount:10
-  }
-];
-                      </code></pre>
-                    </div>
-                    <div class="col large">
-                      <p>Layout</p>
-                      <pre><code data-trim contenteditable class="javascript">
-var pie = d3.layout.pie()
-  .value(function(d){ return d.amount; });
-            
-var layout = pie(data);
-                      </code></pre>
-                      <p>After</p>
-                      <pre><code data-trim contenteditable class="javascript">
-console.log(layout[0]);
-{
-  data: {
-    id:1,
-    amount:10
-  },
-  startAngle: 0,
-  endAngle: 1.5707963267948966, // π/2 or 90º
-  padAngle: 0
-  value: 10 // function(d){ return d.amount; }
-}
-                      </code></pre>
-                    </div>
-                  </div>
-                </section>
-
-				<section data-background-iframe="blocks/prims-5.html">
-					<h2 class="outro-title">Thanks for watching!</h2>
-                    <ul class="outro-title">
-                        <li>Mike Bostock's Blocks: <a href="http://bl.ocks.org/mbostock">http://bl.ocks.org/mbostock</a></li>
-                        <li>The D3 Wiki: <a href="https://github.com/mbostock/d3/wiki">https://github.com/mbostock/d3/wiki</a></li>
+                        <li>Slack: <a href="http://d3js.slack.com " target="_blank">d3js.slack.com </a></li>
+                        <li>Mike Bostock's Blocks: <a href="http://bl.ocks.org/mbostock">bl.ocks.org/mbostock</a></li>
+                        <li>The D3 Wiki: <a href="https://github.com/mbostock/d3/wiki">github.com/mbostock/d3/wiki</a></li>
                         <li>Mike Bostock's tutorials: 
                           <ul>
-                            <li>Let's Make a Bar Chart: <a href="http://bost.ocks.org/mike/bar/">http://bost.ocks.org/mike/bar/</a></li>
-                            <li>Let's Make a Map: <a href="http://bost.ocks.org/mike/map/">http://bost.ocks.org/mike/map/</a></li>
-                            <li>Let's Make a Bubble Map: <a href="http://bost.ocks.org/mike/bubble-map/">http://bost.ocks.org/mike/bubble-map/</a></li>
+                            <li>Let's Make a Bar Chart: <a href="http://bost.ocks.org/mike/bar/">bost.ocks.org/mike/bar/</a></li>
+                            <li>Let's Make a Map: <a href="http://bost.ocks.org/mike/map/">bost.ocks.org/mike/map/</a></li>
+                            <li>Let's Make a Bubble Map: <a href="http://bost.ocks.org/mike/bubble-map/">bost.ocks.org/mike/bubble-map/</a></li>
                           </ul>
                         </li>
                     </ul>
-					<p class="outro-title"><a href="https://twitter.com/Uehreka" target="_blank">@Uehreka</a></p>
+				</section>
+
+
+				<section data-background-iframe="blocks/prims-5.html">
+					<h2 class="outro-title">Thanks for watching!</h2>
+					<p><a class="outro-title" href="https://twitter.com/Uehreka" target="_blank">@Uehreka</a></p>
 				</section>
 			</div>
 		</div>

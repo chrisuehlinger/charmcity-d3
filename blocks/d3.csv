@@ -6,7 +6,7 @@ size,path,unused,tutorial
 ,d3/d3-brush,true,false
 ,d3/d3-chord,true,false
 ,d3/d3-collection,true,false
-,d3/d3-color,false,true
+,d3/d3-color,false,false
 ,d3/d3-dispatch,true,false
 ,d3/d3-drag,false,false
 ,d3/d3-dsv,false,false
@@ -21,7 +21,7 @@ size,path,unused,tutorial
 ,d3/d3-hierarchy/hierarchy,false,false
 ,d3/d3-hierarchy/pack,false,false
 ,d3/d3-hierarchy/treemap,false,false
-,d3/d3-interpolate,false,true
+,d3/d3-interpolate,false,false
 ,d3/d3-interpolate/transform,false,false
 ,d3/d3-path,false,false
 ,d3/d3-polygon,true,false
@@ -40,7 +40,7 @@ size,path,unused,tutorial
 ,d3/d3-time-format,false,false
 ,d3/d3-time,false,false
 ,d3/d3-timer,false,false
-,d3/d3-transition,false,false
+,d3/d3-transition,false,true
 ,d3/d3-transition/selection,false,false
 ,d3/d3-transition/transition,false,false
 ,d3/d3-voronoi,true,false
